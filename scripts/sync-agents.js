@@ -28,21 +28,6 @@ const SEPARATOR = '\n\n---\n\n'
 // All content concatenated
 const allContent = [core, workflow, patterns].join(SEPARATOR)
 
-// Extract section from markdown by ## heading
-function extractSection(content, headingText) {
-  const lines = content.split('\n')
-  const startIdx = lines.findIndex(l => l.trim() === `## ${headingText}`)
-  if (startIdx === -1) {
-    console.warn(`  ⚠️  Section "## ${headingText}" not found in PATTERNS.md`)
-    return `## ${headingText}\n\n(section not found)`
-  }
-  let endIdx = lines.length
-  for (let i = startIdx + 1; i < lines.length; i++) {
-    if (lines[i].startsWith('## ')) { endIdx = i; break }
-  }
-  return lines.slice(startIdx, endIdx).join('\n').trim()
-}
-
 // Write file creating directories as needed
 function write(relPath, content) {
   const fullPath = join(ROOT, relPath)
