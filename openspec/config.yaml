@@ -28,6 +28,3 @@ operations:
     guidance:
       - Lavorare solo nel worktree del branch ai/<nome-change>
       - Non modificare mai i test esistenti per farli passare
-  archive:
-    guidance:
-      - Se la spec principale ha "Purpose" vuoto o TBD, segnalarlo prima di chiudere
