@@ -28,3 +28,8 @@ done
 
 # ── Agents Sync check ──────────────────────────────────────────────────────────
 node scripts/sync-agents.js --check || exit 1
+
+git diff --quiet -- AGENTS.md CLAUDE.md .cursor/ || {
+  echo "❌  File generati modificati ma non in staging: git add AGENTS.md CLAUDE.md .cursor/"
+  exit 1
+}
