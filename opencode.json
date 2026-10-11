@@ -22,10 +22,11 @@
       "opencode.json": "deny",
       ".opencode/*": "deny",
       "openspec/config.yaml": "deny",
-      "openspec/specs/*": "ask"
+      "openspec/specs/*": "deny"
     },
     "bash": {
       "*": "ask",
+
       "ls*": "allow",
       "pwd": "allow",
       "cat *": "allow",
@@ -37,6 +38,7 @@
       "find *": "allow",
       "find *-delete*": "deny",
       "find *-exec*": "ask",
+
       "git status*": "allow",
       "git diff*": "allow",
       "git log*": "allow",
@@ -57,6 +59,7 @@
       "git rebase *": "deny",
       "git reset --hard*": "deny",
       "git clean *": "deny",
+
       "npm ci": "allow",
       "npm install *": "ask",
       "npm i *": "ask",
@@ -68,10 +71,10 @@
       "npm audit fix*": "deny",
       "npx openspec *": "allow",
       "npx --no -- openspec *": "allow",
+
       "rm -rf *": "deny",
       "rm -fr *": "deny",
       "sudo *": "deny"
     }
   }
 }
-

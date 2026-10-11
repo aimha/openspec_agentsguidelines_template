@@ -62,7 +62,7 @@ In both branches, never create the root as a side effect: do not run `openspec i
    **If all planning artifacts are complete (`isPlanningComplete: true`, or legacy `isComplete: true`)**:
    - Congratulate the user
    - Show final status including the schema used
-   - Suggest: "Planning is complete! You can now implement this change with `/opsx-apply`. Once implementation and any tracked work are complete, archive it with `/opsx-archive`."
+   - Suggest: "Planning is complete! You can now implement this change with `/opsx-apply`. Once implementation and any tracked work are complete, archive it with `openspec archive "<name>"`."
    - STOP
 
    ---

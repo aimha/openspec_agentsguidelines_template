@@ -19,7 +19,7 @@ Una spec è **conclusa** quando:
 | 5. Piano              | branch `spec/<nome-change>`  | `/opsx-continue` → `tasks.md`, poi merge della PR     |
 | 6. Lavorazioni        | worktree `ai/<nome-change>`  | sessione test, poi `/opsx-apply`                      |
 | 7. Verifica           | worktree + PR                | `/opsx-verify`, test, summary, review umana           |
-| 8. Chiusura           | worktree, prima del merge    | `/opsx-archive`                                       |
+| 8. Chiusura           | worktree, prima del merge    | `npx openspec archive <nome-change> --yes`            |
 
 ### 1. Analisi
 
@@ -76,8 +76,9 @@ L'agente della sessione 2 non modifica i test. Se un test sembra sbagliato, si f
 
 ### 8. Chiusura
 
-- Prima del merge, `/opsx-archive` sposta il change in `openspec/changes/archive/` e fonde il delta nelle spec principali in `openspec/specs/`.
-- Se la spec principale ha `Purpose` vuoto o `TBD`, compilarlo.
+- Prima del merge, `npx openspec archive <nome-change> --yes` sposta il change in `openspec/changes/archive/` e fonde il delta nelle spec principali in `openspec/specs/`.
+- Si usa la CLI e non `/opsx-archive`: la CLI fonde i delta in modo deterministico e si rifiuta di procedere se un `MODIFIED` perderebbe scenari esistenti. `/opsx-archive` fa riscrivere le spec all'agente.
+- Se la spec principale ha `Purpose` vuoto o `TBD`, lo compila l'umano nella review della PR: gli agenti non possono modificare `openspec/specs/`.
 - Il commit di archiviazione è l'ultimo della PR: codice e spec aggiornata entrano in `main` insieme.
 
 ## Change senza comportamento nuovo
@@ -119,7 +120,7 @@ Al termine del change creare `docs/summaries/<nome-change>.md`. Il nome corrispo
 
 - Scrivere codice prima che la spec del change sia conclusa
 - Modificare i test durante l'implementazione
-- Modificare a mano `openspec/specs/`: si aggiorna solo con `/opsx-archive`
+- Modificare a mano `openspec/specs/`: si aggiorna solo con `npx openspec archive`
 - Switch di branch durante una sessione
 - Amend su commit già pushati
 - Push diretti su branch protetti (`main`, `develop`)
