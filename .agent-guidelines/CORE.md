@@ -63,6 +63,7 @@ scripts/sync-agents.js
 AGENTS.md
 CLAUDE.md
 openspec/config.yaml
-opencode/commands/
+.opencode/commands/
 .opencode/skills/
+.cursor/
 ```

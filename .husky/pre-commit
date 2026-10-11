@@ -26,3 +26,5 @@ for FILE in $STAGED; do
   fi
 done
 
+# ── Agents Sync check ──────────────────────────────────────────────────────────
+node scripts/sync-agents.js --check || exit 1

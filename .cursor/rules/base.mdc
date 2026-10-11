@@ -1,5 +1,5 @@
 ---
-description: Regole base — architettura, naming, workflow
+description: Regole base — architettura, naming, workflow, pattern
 alwaysApply: true
 ---
 
@@ -69,6 +69,10 @@ scripts/sync-agents.js
 .agent-guidelines/*
 AGENTS.md
 CLAUDE.md
+openspec/config.yaml
+.opencode/commands/
+.opencode/skills/
+.cursor/
 ```
 
 ---
@@ -159,3 +163,7 @@ Eseguire `/user:update-context` per aggiornare gli header dei file modificati e,
 - Push diretti su branch protetti (`main`, `develop`)
 - Operazioni di merge o rebase
 - Modifica di file protetti (lista in CORE.md)
+
+---
+
+# PATTERNS — Pattern specifici dello stack
