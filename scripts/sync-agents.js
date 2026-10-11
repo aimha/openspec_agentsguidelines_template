@@ -43,9 +43,6 @@ write('AGENTS.md', BANNER + allContent + '\n')
 // ── CLAUDE.md (Claude Code) ──────────────────────────────────────────────────
 write('CLAUDE.md', BANNER + allContent + '\n')
 
-// ── .github/copilot-instructions.md ─────────────────────────────────────────
-write('.github/copilot-instructions.md', BANNER + allContent + '\n')
-
 // ── Cursor base.mdc (always active) ─────────────────────────────────────────
 const baseMdc = `---
 description: Regole base — architettura, naming, workflow
