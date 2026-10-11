@@ -72,28 +72,4 @@ ${BANNER}${core}${SEPARATOR}${workflow}
 `
 write('.cursor/rules/base.mdc', baseMdc)
 
-// ── Cursor components.mdc (scoped to frontend/src/components/**) ─────────────
-const componentsSection = extractSection(patterns, 'Componenti SolidJS')
-const componentsMdc = `---
-description: Regole per i componenti SolidJS
-globs: frontend/src/components/**/*.jsx
-alwaysApply: true
----
-
-${BANNER}${componentsSection}
-`
-write('.cursor/rules/components.mdc', componentsMdc)
-
-// ── Cursor stores.mdc (scoped to frontend/src/store/**) ─────────────────────
-const storesSection = extractSection(patterns, 'Store e Signals')
-const storesMdc = `---
-description: Regole per store e signals SolidJS
-globs: frontend/src/store/**/*.jsx
-alwaysApply: true
----
-
-${BANNER}${storesSection}
-`
-write('.cursor/rules/stores.mdc', storesMdc)
-
 console.log('\n✅  sync-agents completed\n')
