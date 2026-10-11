@@ -2,11 +2,10 @@
 // ROLE: Distributes .agent-guidelines/ to all target agent files
 // DEPENDS ON: .agent-guidelines/CORE.md, WORKFLOW.md, PATTERNS.md
 // USED BY: npm run sync-agents (run manually after modifying guidelines)
-// KEY DECISIONS: ESM only (package.json has "type": "module"); sections extracted
-//   from PATTERNS.md via ## headings for scoped cursor rules
+// KEY DECISIONS: ESM only (package.json has "type": "module"); 
 // GOTCHAS: Target files are generated - do not modify directly.
 //   Section extraction depends on exact headings in PATTERNS.md.
-// LAST UPDATED: 2026-09-29 - stores.mdc glob fixed to real path frontend/src/store/** (R3, L7-54)
+// LAST UPDATED: 2026-10-11 - Removed foundation references and dead code
 // ============================================================
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs'
