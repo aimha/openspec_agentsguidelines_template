@@ -50,6 +50,7 @@ alwaysApply: true
 ---
 
 ${BANNER}${core}${SEPARATOR}${workflow}
+${SEPARATOR}${patterns}
 `
 write('.cursor/rules/base.mdc', baseMdc)
 
