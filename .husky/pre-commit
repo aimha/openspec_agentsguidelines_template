@@ -1,0 +1,72 @@
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# ── Blocco commit su main/develop ────────────────────────────────────────────
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
+  echo ""
+  echo "❌  Commit diretto su '$BRANCH' non consentito."
+  echo "    Apri un branch dedicato (feature/*, fix/*, ...)."
+  echo ""
+  exit 1
+fi
+
+# ── Lint staged files ────────────────────────────────────────────────────────
+npx lint-staged
+
+# ── Dimensione file ──────────────────────────────────────────────────────────
+MAX_SIZE_KB=500
+STAGED=$(git diff --cached --name-only)
+
+for FILE in $STAGED; do
+  if [ -f "$FILE" ]; then
+    SIZE_KB=$(du -k "$FILE" | cut -f1)
+    if [ "$SIZE_KB" -gt "$MAX_SIZE_KB" ]; then
+      echo ""
+      echo "❌  File troppo grande: $FILE (${SIZE_KB}KB > ${MAX_SIZE_KB}KB)"
+      echo "    Suddividi il file o usa git-lfs per asset binari."
+      echo ""
+      exit 1
+    fi
+  fi
+done
+
+# ── Naming conventions ───────────────────────────────────────────────────────
+for FILE in $STAGED; do
+  BASENAME=$(basename "$FILE")
+
+  # Componenti SolidJS: NomeComponente/NomeComponente.jsx, index.{js,jsx,ts},
+  # NomeComponente.module.{scss,js} o NomeComponente.test.js
+  if echo "$FILE" | grep -qE '^src/components/'; then
+    if ! echo "$BASENAME" | grep -qE '^(index\.(js|jsx|ts)|[A-Z][a-zA-Z0-9]+\.(jsx|module\.scss|module\.js|test\.js))$'; then
+      echo ""
+      echo "❌  Naming non conforme in components/: $FILE"
+      echo "    Atteso: NomeComponente.jsx, index.{js,jsx,ts},"
+      echo "    NomeComponente.module.{scss,js} o NomeComponente.test.js"
+      echo ""
+      exit 1
+    fi
+
+    # Il nome PascalCase deve corrispondere alla cartella padre (Slider/Slider.jsx)
+    if echo "$BASENAME" | grep -qE '^[A-Z][a-zA-Z0-9]+\.(jsx|module\.scss|module\.js|test\.js)$'; then
+      FOLDER=$(basename "$(dirname "$FILE")")
+      NAME="${BASENAME%%.*}"
+      if [ "$NAME" != "$FOLDER" ]; then
+        echo ""
+        echo "❌  Il file non porta il nome della cartella: $FILE"
+        echo "    Atteso: $FOLDER/$FOLDER.${BASENAME#*.}"
+        echo ""
+        exit 1
+      fi
+    fi
+  fi
+
+  # Store: camelCase.store.js
+  if echo "$FILE" | grep -qE '^src/store/'; then
+    if ! echo "$BASENAME" | grep -qE '^[a-z][a-zA-Z0-9]+\.store\.js$'; then
+      echo ""
+      echo "❌  Naming non conforme in store/: $FILE"
+      echo "    Atteso: camelCase.store.js"
+      echo ""
+      exit 1
+    fi
+  fi
+done

@@ -1,0 +1,9 @@
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
+  echo ""
+  echo "❌  Push diretto su '$BRANCH' non consentito."
+  echo "    Usa una PR."
+  echo ""
+  exit 1
+fi
