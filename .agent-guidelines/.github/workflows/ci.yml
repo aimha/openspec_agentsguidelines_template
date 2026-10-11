@@ -1,0 +1,80 @@
+# ============================================================
+# ROLE: CI del template: gate su commit, guidelines, OpenSpec, flusso e dipendenze
+# DEPENDS ON: scripts/sync-agents.js, scripts/check-flow.sh, commitlint.config.js, openspec CLI
+# USED BY: GitHub Actions su ogni PR verso main e su ogni push su main
+# KEY DECISIONS: action pinnate a SHA (supply chain); audit solo sulle dipendenze di
+#   produzione; lint/test/build con --if-present, così i progetti li ereditano
+#   appena aggiungono gli script
+# GOTCHAS: il nome del branch arriva da github.head_ref ed è input non fidato:
+#   passa sempre da una variabile d'ambiente, mai interpolato nello script
+# LAST UPDATED: 2026-10-11 - prima versione
+# ============================================================
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      OPENSPEC_TELEMETRY: '0'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Commit messages
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: npx --no -- commitlint --from "$BASE_SHA" --to "$HEAD_SHA" --verbose
+
+      - name: Flusso OpenSpec (branch, spec, archivio, summary)
+        if: github.event_name == 'pull_request'
+        env:
+          BRANCH: ${{ github.head_ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: bash scripts/check-flow.sh "$BRANCH" "$BASE_SHA" "$HEAD_SHA"
+
+      - name: Guidelines allineate ai file generati
+        run: node scripts/sync-agents.js --check
+
+      - name: OpenSpec validate
+        run: |
+          npx --no -- openspec validate --all --strict --no-interactive
+          npx --no -- openspec validate --archived --no-interactive
+
+      - name: Audit dipendenze di produzione
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Test
+        run: npm run test --if-present
+
+      - name: Build
+        run: npm run build --if-present
