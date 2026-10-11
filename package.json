@@ -1,0 +1,30 @@
+{
+  "name": "openspec_agentsguidelines_template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "commitlint.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "sync-agents": "node scripts/sync-agents.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aimha/openspec_agentsguidelines_template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/aimha/openspec_agentsguidelines_template/issues"
+  },
+  "homepage": "https://github.com/aimha/openspec_agentsguidelines_template#readme",
+  "private": "true",
+  "devDependencies": {
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "@fission-ai/openspec": "1.14.1",
+    "husky": "9.1.7"
+  }
+}
