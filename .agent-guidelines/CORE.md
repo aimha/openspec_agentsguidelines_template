@@ -1,12 +1,4 @@
-# CORE — Architettura, naming, restrizioni assolute
-
-## Stack
-
-## Struttura del progetto 
-
 ## Naming conventions
-
-### File e cartelle
 
 ### Branch
 
@@ -34,16 +26,10 @@ Ogni file TS/JS deve iniziare con questo blocco:
 // ============================================================
 ```
 
-## Regole ESLint
-
-- `explicit-function-return-type`, `no-floating-promises`, `complexity` max 10, `max-lines-per-function` 50, `no-console`, `no-explicit-any`
-- Override per `**/*.spec.ts`: disabilita `explicit-function-return-type`, `max-lines-per-function`, `no-unsafe-*`, `unbound-method`
-
 ## Commit
 
 - Conventional Commits con commitlint
 - `subject-case: lower-case` — nomi di librerie vanno lowercased nel subject
-- Pre-commit hook con Husky + lint-staged
 
 ## Regole generali
 
@@ -69,4 +55,11 @@ package-lock.json
 docker-compose.yml
 .github/workflows/*
 Makefile
+.husky/*
+commitlint.config.js
+.npmrc
+scripts/sync-agents.js
+.agent-guidelines/*
+AGENTS.md
+CLAUDE.md
 ```
