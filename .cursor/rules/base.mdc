@@ -115,7 +115,7 @@ Una spec è **conclusa** quando:
 
 | Passo                 | Dove                         | Comando / artefatto                                   |
 | --------------------- | ---------------------------- | ----------------------------------------------------- |
-| 1. Analisi            | conversazione                | `/opsx-explore` — nessun file                         |
+| 1. Analisi            | branch `spec/<nome-change>`  | `/grill` → `GLOSSARY.md`, eventuali ADR in `docs/adr/` |
 | 2. Formalizzazione    | branch `spec/<nome-change>`  | `/opsx-new`, poi `/opsx-continue` → `proposal.md` e spec delta |
 | 3. Dettaglio tecnico  | branch `spec/<nome-change>`  | `/opsx-continue` → `design.md`                        |
 | 4. Validazione        | PR della spec                | `openspec validate --strict` + review umana           |
@@ -126,22 +126,24 @@ Una spec è **conclusa** quando:
 
 ### 1. Analisi
 
-- Capire il problema prima di formalizzarlo: domande una alla volta, ogni decisione esplicita.
-- I **fatti** (com'è il codice, cosa esiste già) li verifica l'agente leggendo il progetto. Le **decisioni** le prende l'umano: l'agente le propone con una raccomandazione e aspetta la risposta.
+- Scegliere il nome del change (kebab-case) e creare il branch `spec/<nome-change>` da `main` aggiornato.
+- `/grill <descrizione del change>` avvia l'intervista: una decisione alla volta, ogni decisione esplicita.
+- I **fatti** (com'è il codice, cosa dicono le spec esistenti) li verifica l'agente. Le **decisioni** le prende l'umano: l'agente le propone con una raccomandazione e aspetta la risposta.
 - I termini di dominio emersi vanno in `GLOSSARY.md` appena sono definiti.
-- Nessun file del change viene creato in questo passo.
+- Le decisioni che valgono oltre il singolo change, difficili da invertire e frutto di un trade-off reale, vanno in un ADR in `docs/adr/`. Quelle locali al change finiranno in `design.md`.
+- Nessun artefatto OpenSpec e nessun codice in questo passo. L'analisi si chiude con il riepilogo delle decisioni, input dei passi successivi.
 
 ### 2–3. Formalizzazione e dettaglio tecnico
 
-- Creare il branch `spec/<nome-change>` da `main` aggiornato.
-- `/opsx-new <nome-change>` crea la cartella del change, senza artefatti.
+- Sullo stesso branch, `/opsx-new <nome-change>` crea la cartella del change, senza artefatti.
 - `/opsx-continue` crea un artefatto alla volta: `proposal.md`, spec delta, poi `design.md`. Rileggere ogni artefatto prima di passare al successivo.
+- `design.md` rimanda agli ADR del passo 1 invece di ripeterli.
 - I comandi OpenSpec di questi passi producono solo documenti: nessuna modifica al codice.
 
 ### 4. Validazione
 
 - `npx openspec validate <nome-change> --strict` deve passare.
-- Aprire la PR `spec/<nome-change>` → `main` e chiedere la review di proposal, spec e design.
+- Aprire la PR `spec/<nome-change>` → `main` e chiedere la review di proposal, spec, design, glossario ed eventuali ADR.
 - `validate` controlla la forma, non il significato: la review umana è la parte che conta.
 
 ### 5. Piano

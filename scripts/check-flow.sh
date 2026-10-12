@@ -3,11 +3,11 @@
 # ROLE: Gate del flusso OpenSpec per le PR, in base al prefisso del branch
 # DEPENDS ON: git, struttura openspec/ e docs/summaries/
 # USED BY: .github/workflows/ci.yml (job checks, solo su pull_request)
-# KEY DECISIONS: spec/<nome> contiene solo il change omonimo (+ GLOSSARY.md) e deve
+# KEY DECISIONS: spec/<nome> contiene solo il change omonimo (+ GLOSSARY.md e docs/adr/) e deve
 #   avere tasks.md; ai/<nome> deve arrivare al merge con il change archiviato e il summary
 # GOTCHAS: <nome> deve coincidere con il nome del change OpenSpec.
 #   feature/ e fix/ controllano solo il nome del branch.
-# LAST UPDATED: 2026-10-11 - prima versione
+# LAST UPDATED: 2026-10-12 - ADR ammessi nella PR della spec
 # ============================================================
 set -euo pipefail
 
@@ -34,7 +34,7 @@ case "$PREFIX" in
       || fail "Manca openspec/changes/$NAME: il branch spec/ contiene il change con lo stesso nome"
     [ -f "openspec/changes/$NAME/tasks.md" ] \
       || fail "Manca openspec/changes/$NAME/tasks.md: la PR della spec si mergia dopo il piano (passo 5)"
-    OUTSIDE=$(printf '%s\n' "$CHANGED" | grep -vE "^(openspec/changes/$NAME/|GLOSSARY\.md$)" || true)
+    OUTSIDE=$(printf '%s\n' "$CHANGED" | grep -vE "^(openspec/changes/$NAME/|GLOSSARY\.md$|docs/adr/)" || true)
     [ -z "$OUTSIDE" ] \
       || fail "La PR della spec modifica file fuori dal change:\n$OUTSIDE"
     ;;
