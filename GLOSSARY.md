@@ -1,4 +1,6 @@
 # Glossario di dominio
 
-<!-- PROJECT: termini canonici del progetto, compilati durante l'analisi.
-Formato: **termine**: definizione. Nessun dettaglio implementativo. -->
+<!-- PROJECT: una o due frasi su cosa copre il progetto. I termini si aggiungono
+durante l'analisi (/grill), nel formato di .opencode/skills/domain-modeling/GLOSSARY-FORMAT.md. -->
+
+## Linguaggio
