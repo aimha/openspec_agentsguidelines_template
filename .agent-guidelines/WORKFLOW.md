@@ -107,7 +107,7 @@ Al termine del change creare `docs/summaries/<nome-change>.md`. Il nome corrispo
 - Una sessione = un passo del flusso, o una delle due sessioni del passo 6
 - Nuovo obiettivo = nuova sessione
 - Chiudere la sessione orientativamente al 70-80% della context window; ideale non superare il 40-50%
-- Al termine di ogni sessione eseguire `/user:update-context` per aggiornare gli header dei file modificati
+- Al termine di ogni sessione eseguire `/update-context` per aggiornare gli header dei file modificati
 
 ### Segnali di degrado da monitorare
 

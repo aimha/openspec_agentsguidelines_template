@@ -12,9 +12,11 @@
 - **Commenti nel codice:** inglese
 - **Documentazione** (README, docs/): italiano
 
-## File header obbligatorio
+## Header e commenti
 
-Ogni file TS/JS deve iniziare con questo blocco:
+### Header obbligatorio
+
+Ogni file di codice inizia con questo blocco, seguito da una riga vuota. Si usa la sintassi di commento del linguaggio: `//` per TS/JS, `#` per shell e YAML.
 
 ```
 // ============================================================
@@ -26,6 +28,25 @@ Ogni file TS/JS deve iniziare con questo blocco:
 // LAST UPDATED: [data ISO + breve descrizione]
 // ============================================================
 ```
+
+- ROLE è una sola riga
+- GOTCHAS è la sezione più importante: solo ciò che morde
+- LAST UPDATED si aggiorna solo per modifiche semanticamente rilevanti
+- Al termine di ogni sessione, `/update-context` aggiorna gli header dei file modificati
+
+### Commenti inline
+
+- Una riga sopra ogni metodo o funzione: **cosa fa**, non come
+
+  ```typescript
+  // Calculates the order total applying discounts and VAT
+  function calculateTotal(order: Order): number { ... }
+  ```
+
+- Una riga sopra ogni gruppo logico di stato o costanti: il **dominio** che rappresenta
+- I commenti descrivono il perché o il dominio, mai il cosa se è già evidente dal nome
+- Sempre una riga sola, mai blocchi di commento su più righe
+- Nessun commento su codice auto-esplicativo (getter banali, assegnazioni ovvie)
 
 ## Commit
 
