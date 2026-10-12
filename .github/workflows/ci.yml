@@ -7,7 +7,7 @@
 #   appena aggiungono gli script
 # GOTCHAS: il nome del branch arriva da github.head_ref ed è input non fidato:
 #   passa sempre da una variabile d'ambiente, mai interpolato nello script
-# LAST UPDATED: 2026-10-11 - prima versione
+# LAST UPDATED: 2026-10-12 - commitlint anche sui push su main, per rilevare i bypass
 # ============================================================
 name: CI
 
@@ -50,6 +50,13 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: npx --no -- commitlint --from "$BASE_SHA" --to "$HEAD_SHA" --verbose
+
+      - name: Commit messages (push su main)
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: npx --no -- commitlint --from "$BEFORE_SHA" --to "$AFTER_SHA" --verbose
 
       - name: Flusso OpenSpec (branch, spec, archivio, summary)
         if: github.event_name == 'pull_request'
