@@ -23,29 +23,33 @@ Le regole per gli agenti stanno in `.agent-guidelines/` e vengono distribuite in
 
 1. **Crea il repo dal template** con "Use this template" su GitHub, poi clonalo.
 2. **Installa e attiva gli hook**:
-   ```bash
+```bash
    npm ci
    git config core.hooksPath   # deve rispondere .husky/_
-   ```
+```
    Gli hook si attivano solo con `npm ci` o `npm install` senza argomenti. Se `core.hooksPath` è vuoto, `npm run prepare`.
 3. **Applica il profilo OpenSpec** (disattiva anche la telemetria):
-   ```bash
+```bash
    npm run openspec-update
-   ```
+```
 4. **Aggiorna i metadati** in `package.json`: `name`, `description`, `repository`, `bugs`, `homepage`, `license`.
-5. **Proteggi `main` su GitHub**, in Settings → Branches o Rules:
-   - PR obbligatoria prima del merge;
-   - status check obbligatorio `checks` (compare dopo la prima esecuzione della CI);
-   - nessun bypass, nemmeno per gli amministratori.
+5. **Proteggi `main` su GitHub**, in Settings → Branches:
+   - "Require a pull request before merging" attivo;
+   - "Require status checks to pass before merging" attivo, con il controllo `checks` **selezionato** nell'elenco dei controlli richiesti. Compare dopo la prima esecuzione della CI; attivare l'opzione senza selezionarlo non blocca niente;
+   - "Do not allow bypassing the above settings" attivo, altrimenti chi amministra il repo può mergiare con la CI rossa;
+   - "Allow force pushes" e "Allow deletions" disattivi;
+   - "Require approvals": l'autore di una PR non può approvarla da solo. Attivala quando nel progetto lavora più di una persona, sapendo che anche le PR di chi approva avranno bisogno di un'altra approvazione.
 
    In Settings → General attiva anche "Automatically delete head branches".
+
+   **Verifica**: apri una PR da un branch con un nome non valido (per esempio `prova/x`). La CI deve fallire e il pulsante di merge deve risultare bloccato.
 6. **Descrivi il progetto** in `.agent-guidelines/PATTERNS.md`: stack, struttura delle cartelle, naming, pattern. Nell'intestazione di `GLOSSARY.md`, una o due frasi su cosa copre il progetto.
 7. **Aggiungi il tooling dello stack**:
    - script `lint`, `test` e `build` in `package.json`: la CI li esegue in automatico;
    - i file di configurazione dello stack (per esempio `vite.config.*`) nei file protetti di `CORE.md` e nei `deny` di `opencode.json`;
    - se serve lint-staged, installalo come devDependency con la sua configurazione prima di aggiungerlo al pre-commit.
 8. **Sostituisci `README.md`** con quello del progetto. Questo file resta come riferimento.
-9. `npm run sync-agents`, commit su un branch `feature/`, prima PR.
+9. `npm run sync-agents`, commit su un branch `chore/`, prima PR.
 
 ## Il flusso in breve
 
@@ -90,6 +94,7 @@ Gli hook locali si possono saltare: il gate vero è la CI con la protezione di `
 
 ## Regole di manutenzione
 
+- **Prefissi dei branch**: `spec/` e `ai/` per il flusso OpenSpec; `feature/`, `fix/` e `chore/` per il lavoro delle persone. La CI rifiuta qualsiasi altro prefisso.
 - **Mai `npx openspec update` a mano**: rigenera secondo il profilo globale di chi lo lancia. Usare `npm run openspec-update`.
 - **Aggiornare OpenSpec**: cambiare la versione esatta in `package.json` (release di almeno 5 giorni), `npm install`, `npm run openspec-update`, PR.
 - **Skill upstream** (`grilling`, `domain-modeling`): sono pinnate al commit indicato in `UPSTREAM.md`. Per aggiornarle, confrontare la nuova versione con le modifiche locali elencate nel frontmatter e riportarle a mano.
@@ -99,6 +104,7 @@ Gli hook locali si possono saltare: il gate vero è la CI con la protezione di `
 ## Limiti noti
 
 - **I permessi di OpenCode non sono una sandbox**: un agente può scrivere su un file protetto passando dalla shell. Il contenimento vero sono CI, protezione del branch e, in futuro, `sbx`.
+- **I branch `feature/`, `fix/` e `chore/` non richiedono un change OpenSpec**: la CI ne controlla solo il nome. Nei progetti sono una porta laterale rispetto al flusso, da regolare.
 - **Cursor riceve le regole ma non i comandi `/opsx-*`**: OpenSpec è generato solo per OpenCode.
 - **`npm audit` segnala `braces`** nelle dipendenze di sviluppo, tramite la CLI di OpenSpec: non sfruttabile in questo contesto, e la CI controlla solo le dipendenze di produzione.
 - **La copertura scenari → test non è ancora un gate**: dipende dal test runner dello stack e va aggiunta per progetto.
