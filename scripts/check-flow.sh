@@ -4,10 +4,11 @@
 # DEPENDS ON: git, struttura openspec/ e docs/summaries/
 # USED BY: .github/workflows/ci.yml (job checks, solo su pull_request)
 # KEY DECISIONS: spec/<nome> contiene solo il change omonimo (+ GLOSSARY.md e docs/adr/) e deve
-#   avere tasks.md; ai/<nome> deve arrivare al merge con il change archiviato e il summary
+#   avere tasks.md e solo commit docs; ai/<nome> deve arrivare al merge con il change
+#   archiviato e il summary
 # GOTCHAS: <nome> deve coincidere con il nome del change OpenSpec.
 #   feature/ e fix/ controllano solo il nome del branch.
-# LAST UPDATED: 2026-10-12 - ADR ammessi nella PR della spec
+# LAST UPDATED: 2026-10-12 - solo commit docs sui branch spec/
 # ============================================================
 set -euo pipefail
 
@@ -37,6 +38,9 @@ case "$PREFIX" in
     OUTSIDE=$(printf '%s\n' "$CHANGED" | grep -vE "^(openspec/changes/$NAME/|GLOSSARY\.md$|docs/adr/)" || true)
     [ -z "$OUTSIDE" ] \
       || fail "La PR della spec modifica file fuori dal change:\n$OUTSIDE"
+    NOT_DOCS=$(git log --no-merges --format='%h %s' "$BASE_SHA".."$HEAD_SHA" | grep -vE '^[0-9a-f]+ docs(\([a-z0-9-]+\))?!?: ' || true)
+    [ -z "$NOT_DOCS" ] \
+      || fail "Sui branch spec/ sono ammessi solo commit di tipo docs:\n$NOT_DOCS"
     ;;
   ai)
     [ ! -d "openspec/changes/$NAME" ] \

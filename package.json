@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "prepare": "husky",
-    "sync-agents": "node scripts/sync-agents.js"
+    "sync-agents": "node scripts/sync-agents.js",
+    "openspec-update": "bash scripts/openspec-update.sh"
   },
   "repository": {
     "type": "git",
