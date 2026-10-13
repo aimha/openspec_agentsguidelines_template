@@ -22,7 +22,7 @@ fail() {
   exit 1
 }
 
-[[ "$BRANCH" =~ ^(ai|spec|feature|fix)/[a-z0-9][a-z0-9-]*$ ]] \
+[[ "$BRANCH" =~ ^(ai|spec|feature|fix|chore)/[a-z0-9][a-z0-9-]*$ ]] \
   || fail "Nome branch non conforme: $BRANCH\n    Atteso: ai|spec|feature|fix/<kebab-case>"
 
 PREFIX="${BRANCH%%/*}"
