@@ -8,6 +8,7 @@
 - `feature/<descrizione>` — feature developer
 - `fix/<descrizione>` — bugfix developer
 - `spec/<nome-change>`
+- `chore/<descrizione>`
 
 ## Lingua
 
