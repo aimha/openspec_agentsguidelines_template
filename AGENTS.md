@@ -88,6 +88,7 @@ config/
 docker-compose.yml
 Makefile
 openspec/config.yaml
+openspec/specs/
 opencode.json
 package-lock.json
 package.json        (root e ogni sub-package)
