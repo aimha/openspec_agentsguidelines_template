@@ -1,3 +1,7 @@
 node_modules/
 *.tar.gz
 *:Zone.Identifier
+
+# Secrets: never in the repo, only .env.example with variable names
+.env*
+!.env.example

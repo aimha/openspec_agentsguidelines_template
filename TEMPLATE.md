@@ -83,7 +83,8 @@ Sui branch `spec/` sono ammessi solo commit `docs`.
 | Niente commit e push diretti su `main` | ✓ | protezione del branch | `deny` su checkout, merge, push forzati |
 | Messaggi Conventional Commits | ✓ | ✓ | |
 | File generati allineati alle guidelines | ✓ | ✓ | `deny` sui file generati |
-| Comandi OpenSpec allineati al profilo | | ✓ | `deny` su `.opencode/` |
+| Comandi OpenSpec allineati al profilo | | ✓ | `deny` su `.opencode/`, su `openspec update`, `init`, `config` e su `npm run openspec-update` |
+| Nessun `.env*` nel repo né letto dall'agente (eccetto `.env.example`) | `.gitignore` | | `deny` in lettura su `.env*` |
 | Nome del branch, PR della spec solo documenti e solo commit `docs` | | ✓ | |
 | Change archiviato e summary presenti prima del merge | | ✓ | |
 | Spec e change OpenSpec validi | | ✓ | `deny` su `openspec/specs/` |
@@ -103,7 +104,7 @@ Gli hook locali si possono saltare: il gate vero è la CI con la protezione di `
 
 ## Limiti noti
 
-- **I permessi di OpenCode non sono una sandbox**: un agente può scrivere su un file protetto passando dalla shell. Il contenimento vero sono CI, protezione del branch e, in futuro, `sbx`.
+- **I permessi di OpenCode non sono una sandbox**: un agente può scrivere su un file protetto o leggere un `.env` passando dalla shell (`cat` è permesso). Il contenimento vero sono CI, protezione del branch e, in futuro, `sbx`.
 - **I branch `feature/`, `fix/` e `chore/` non richiedono un change OpenSpec**: la CI ne controlla solo il nome. Nei progetti sono una porta laterale rispetto al flusso, da regolare.
 - **Cursor riceve le regole ma non i comandi `/opsx-*`**: OpenSpec è generato solo per OpenCode.
 - **`npm audit` segnala `braces`** nelle dipendenze di sviluppo, tramite la CLI di OpenSpec: non sfruttabile in questo contesto, e la CI controlla solo le dipendenze di produzione.
