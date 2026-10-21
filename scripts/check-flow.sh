@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # ============================================================
-# ROLE: Gate del flusso OpenSpec per le PR, in base al prefisso del branch
-# DEPENDS ON: git, struttura openspec/ e docs/summaries/
-# USED BY: .github/workflows/ci.yml (job checks, solo su pull_request)
-# KEY DECISIONS: spec/<nome> contiene solo il change omonimo (+ GLOSSARY.md e docs/adr/) e deve
-#   avere tasks.md e solo commit docs; ai/<nome> deve arrivare al merge con il change
-#   archiviato e il summary
-# GOTCHAS: <nome> deve coincidere con il nome del change OpenSpec.
-#   feature/ e fix/ controllano solo il nome del branch.
-# LAST UPDATED: 2026-10-12 - solo commit docs sui branch spec/
+# ROLE: PR gate for the OpenSpec flow, driven by the branch prefix
+# DEPENDS ON: git, openspec/ and docs/summaries/ layout
+# USED BY: .github/workflows/ci.yml (checks job, pull_request only)
+# KEY DECISIONS: spec/<name> holds only the change of the same name (+ GLOSSARY.md and
+#   docs/adr/), must have tasks.md and docs-only commits; ai/<name> must reach the merge
+#   with the change archived via the CLI and the summary in place
+# GOTCHAS: <name> must match the OpenSpec change name.
+#   feature/, fix/ and chore/ only check the branch name.
+#   PREFIXES drives both the regex and the error message: extend it in one place.
+# LAST UPDATED: 2026-10-21 - chore/ in messages, archive hint points to the CLI
 # ============================================================
 set -euo pipefail
 
@@ -16,14 +17,17 @@ BRANCH="$1"
 BASE_SHA="$2"
 HEAD_SHA="$3"
 
+# Branch prefixes accepted by the flow
+PREFIXES="ai|spec|feature|fix|chore"
+
 # Fail with a readable message
 fail() {
   printf '❌  %b\n' "$1"
   exit 1
 }
 
-[[ "$BRANCH" =~ ^(ai|spec|feature|fix|chore)/[a-z0-9][a-z0-9-]*$ ]] \
-  || fail "Nome branch non conforme: $BRANCH\n    Atteso: ai|spec|feature|fix/<kebab-case>"
+[[ "$BRANCH" =~ ^($PREFIXES)/[a-z0-9][a-z0-9-]*$ ]] \
+  || fail "Nome branch non conforme: $BRANCH\n    Atteso: <$PREFIXES>/<kebab-case>"
 
 PREFIX="${BRANCH%%/*}"
 NAME="${BRANCH#*/}"
@@ -44,7 +48,7 @@ case "$PREFIX" in
     ;;
   ai)
     [ ! -d "openspec/changes/$NAME" ] \
-      || fail "Change $NAME non archiviato: eseguire /opsx-archive prima del merge (passo 8)"
+      || fail "Change $NAME non archiviato: eseguire npx openspec archive $NAME --yes prima del merge (passo 8)"
     ls openspec/changes/archive 2>/dev/null | grep -qE "^[0-9]{4}-[0-9]{2}-[0-9]{2}-$NAME$" \
       || fail "Nessun change archiviato con nome $NAME in openspec/changes/archive/"
     [ -f "docs/summaries/$NAME.md" ] \
