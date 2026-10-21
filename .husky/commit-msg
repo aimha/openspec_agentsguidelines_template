@@ -1,1 +1,10 @@
+# ============================================================
+# ROLE: Validates the commit message with commitlint
+# DEPENDS ON: commitlint.config.js, @commitlint/cli
+# USED BY: Husky (core.hooksPath .husky/_)
+# KEY DECISIONS: npx --no never downloads a different commitlint than the pinned one
+# GOTCHAS: Skippable with --no-verify: CI runs commitlint on the whole PR range.
+# LAST UPDATED: 2026-10-21 - header added
+# ============================================================
+
 npx --no -- commitlint --edit "$1"
