@@ -67,6 +67,11 @@ Il dettaglio è in `.agent-guidelines/WORKFLOW.md`.
 
 Sui branch `spec/` sono ammessi solo commit `docs`.
 
+**CI rossa attesa.** In due momenti la CI è rossa per scelta, non per un errore:
+
+- **PR della spec durante la review**: manca ancora `tasks.md`, che arriva al passo 5, dopo l'approvazione. La PR si mergia solo dopo il piano.
+- **PR `ai/` che crea una capability nuova**: dopo l'archive la spec principale ha un `Purpose` segnaposto e `openspec validate --strict` la rifiuta. Una persona scrive lo scopo della capability, almeno 50 caratteri, in `openspec/specs/<capability>/spec.md` e lo committa come `docs` sullo stesso branch. Gli agenti non possono farlo: `openspec/specs/` è protetto.
+
 ## Comandi
 
 | Comando | Quando |
