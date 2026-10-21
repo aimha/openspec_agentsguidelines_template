@@ -182,8 +182,8 @@ L'agente della sessione 2 non modifica i test. Se un test sembra sbagliato, si f
 
 - Prima del merge, `npx openspec archive <nome-change> --yes` sposta il change in `openspec/changes/archive/` e fonde il delta nelle spec principali in `openspec/specs/`.
 - Si usa la CLI e non `/opsx-archive`: la CLI fonde i delta in modo deterministico e si rifiuta di procedere se un `MODIFIED` perderebbe scenari esistenti. `/opsx-archive` fa riscrivere le spec all'agente.
-- Se la spec principale ha `Purpose` vuoto o `TBD`, lo compila l'umano nella review della PR: gli agenti non possono modificare `openspec/specs/`.
-- Il commit di archiviazione è l'ultimo della PR: codice e spec aggiornata entrano in `main` insieme.
+- Se l'archive crea una capability nuova, la spec principale ha un `Purpose` segnaposto e la CI resta rossa finché l'umano non lo compila (almeno 50 caratteri) con un commit sul branch: gli agenti non possono modificare `openspec/specs/`. L'agente lo segnala nel summary, in "Domande aperte e suggerimenti".
+- Il commit di archiviazione è l'ultimo dell'agente nella PR: codice e spec aggiornata entrano in `main` insieme.
 
 ## Change senza comportamento nuovo
 
