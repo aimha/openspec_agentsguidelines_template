@@ -1,6 +1,16 @@
+# ============================================================
+# ROLE: Local pre-commit gate: no commits on main/develop, file size limit, generated files in sync
+# DEPENDS ON: git, scripts/sync-agents.js
+# USED BY: Husky (core.hooksPath .husky/_)
+# KEY DECISIONS: 500KB limit per staged file; sync check runs on the working tree
+# GOTCHAS: Skippable with --no-verify: CI repeats the sync check, branch protection covers main.
+#   Generated files changed but not staged also block the commit.
+# LAST UPDATED: 2026-10-21 - header added
+# ============================================================
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-# ── Blocco commit su main/develop ────────────────────────────────────────────
+# ── Block commits on main/develop ────────────────────────────────────────────
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
   echo ""
   echo "❌  Commit diretto su '$BRANCH' non consentito."
@@ -9,7 +19,7 @@ if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
   exit 1
 fi
 
-# ── Dimensione file ──────────────────────────────────────────────────────────
+# ── File size ────────────────────────────────────────────────────────────────
 MAX_SIZE_KB=500
 STAGED=$(git diff --cached --name-only)
 
@@ -26,7 +36,7 @@ for FILE in $STAGED; do
   fi
 done
 
-# ── Agents Sync check ──────────────────────────────────────────────────────────
+# ── Generated agent files in sync ────────────────────────────────────────────
 node scripts/sync-agents.js --check || exit 1
 
 git diff --quiet -- AGENTS.md CLAUDE.md .cursor/ || {

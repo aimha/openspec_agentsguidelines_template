@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # ============================================================
-# ROLE: Rigenera comandi e skill OpenSpec in .opencode/ dal profilo pinnato nel repo
+# ROLE: Regenerates OpenSpec commands and skills in .opencode/ from the profile pinned in the repo
 # DEPENDS ON: config/openspec-profile.json, @fission-ai/openspec (devDependency)
 # USED BY: npm run openspec-update, CI (--check)
-# KEY DECISIONS: il profilo dei workflow vive nel repo, non nel config globale di chi
-#   lancia il comando; --check rigenera in una cartella temporanea e confronta
-# GOTCHAS: imposta il profilo globale di OpenSpec (~/.config/openspec) ai valori pinnati.
-#   Usa sempre la CLI locale di node_modules, mai una versione globale.
-# LAST UPDATED: 2026-10-12 - prima versione
+# KEY DECISIONS: the workflow profile lives in the repo, not in the global config of whoever
+#   runs the command; --check regenerates into a temp directory and compares
+# GOTCHAS: overwrites the global OpenSpec profile (~/.config/openspec) with the pinned values.
+#   Always uses the local CLI from node_modules, never a global install.
+# LAST UPDATED: 2026-10-12 - first version
 # ============================================================
 set -euo pipefail
 

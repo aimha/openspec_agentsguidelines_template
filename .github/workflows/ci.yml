@@ -1,14 +1,14 @@
 # ============================================================
-# ROLE: CI del template: gate su commit, guidelines, OpenSpec, flusso e dipendenze
+# ROLE: Template CI: gates on commits, guidelines, OpenSpec, flow and dependencies
 # DEPENDS ON: scripts/sync-agents.js, scripts/check-flow.sh, scripts/openspec-update.sh,
 #   commitlint.config.js, openspec CLI
-# USED BY: GitHub Actions su ogni PR verso main e su ogni push su main
-# KEY DECISIONS: action pinnate a SHA (supply chain); audit solo sulle dipendenze di
-#   produzione; lint/test/build con --if-present, così i progetti li ereditano
-#   appena aggiungono gli script
-# GOTCHAS: il nome del branch arriva da github.head_ref ed è input non fidato:
-#   passa sempre da una variabile d'ambiente, mai interpolato nello script
-# LAST UPDATED: 2026-10-12 - controllo dei comandi OpenSpec rispetto al profilo pinnato
+# USED BY: GitHub Actions on every PR to main and every push to main
+# KEY DECISIONS: actions pinned to SHA (supply chain); audit on production dependencies
+#   only; lint/test/build with --if-present, so projects inherit them as soon as they
+#   add the scripts
+# GOTCHAS: the branch name comes from github.head_ref and is untrusted input:
+#   always pass it through an environment variable, never interpolate it in the script
+# LAST UPDATED: 2026-10-12 - OpenSpec commands checked against the pinned profile
 # ============================================================
 name: CI
 

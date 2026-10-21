@@ -1,3 +1,12 @@
+# ============================================================
+# ROLE: Local pre-push gate: no direct pushes to main/develop
+# DEPENDS ON: git
+# USED BY: Husky (core.hooksPath .husky/_)
+# KEY DECISIONS: mirrors the pre-commit branch block for pushes
+# GOTCHAS: Skippable with --no-verify: branch protection on GitHub is the real gate.
+# LAST UPDATED: 2026-10-21 - header added
+# ============================================================
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then

@@ -1,10 +1,10 @@
 // ============================================================
-// ROLE: Regole commitlint basate su Conventional Commits con type-enum ristretto
+// ROLE: Commitlint rules based on Conventional Commits with a restricted type-enum
 // DEPENDS ON: @commitlint/config-conventional
-// USED BY: hook commit-msg di Husky
-// KEY DECISIONS: type-enum senza perf/build/revert rispetto al default conventional
-// GOTCHAS: subject-case lower-case blocca messaggi con soggetto maiuscolo
-// LAST UPDATED: 2026-09-20 — aggiunta header standard
+// USED BY: Husky commit-msg hook, CI commit message step
+// KEY DECISIONS: type-enum drops perf/build/revert from the conventional default
+// GOTCHAS: subject-case lower-case rejects subjects with capitals, library names included
+// LAST UPDATED: 2026-10-21 - USED BY includes the CI step
 // ============================================================
 
 export default {
