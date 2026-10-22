@@ -1,0 +1,31 @@
+{
+  "package": "@aimha/agent-harness",
+  "version": "0.1.0",
+  "files": [
+    ".cursor/rules/base.mdc",
+    ".github/workflows/ci.yml",
+    ".husky/commit-msg",
+    ".husky/pre-commit",
+    ".husky/pre-push",
+    ".opencode/commands/grill.md",
+    ".opencode/commands/opsx-apply.md",
+    ".opencode/commands/opsx-continue.md",
+    ".opencode/commands/opsx-new.md",
+    ".opencode/commands/opsx-verify.md",
+    ".opencode/commands/update-context.md",
+    ".opencode/skills/domain-modeling/ADR-FORMAT.md",
+    ".opencode/skills/domain-modeling/GLOSSARY-FORMAT.md",
+    ".opencode/skills/domain-modeling/SKILL.md",
+    ".opencode/skills/domain-modeling/UPSTREAM.md",
+    ".opencode/skills/grilling/SKILL.md",
+    ".opencode/skills/grilling/UPSTREAM.md",
+    ".opencode/skills/openspec-apply-change/SKILL.md",
+    ".opencode/skills/openspec-continue-change/SKILL.md",
+    ".opencode/skills/openspec-new-change/SKILL.md",
+    ".opencode/skills/openspec-verify-change/SKILL.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "opencode.json",
+    "openspec/config.yaml"
+  ]
+}

@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "prepare": "husky",
-    "sync-agents": "node scripts/sync-agents.js",
-    "openspec-update": "bash scripts/openspec-update.sh"
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -21,9 +19,7 @@
   "homepage": "https://github.com/aimha/openspec_agentsguidelines_template#readme",
   "private": true,
   "devDependencies": {
-    "@commitlint/cli": "21.2.3",
-    "@commitlint/config-conventional": "21.2.3",
-    "@fission-ai/openspec": "1.14.1",
+    "@aimha/agent-harness": "github:aimha/agent-harness#d2af23888bea60b87a848b97745d5dcf109ca7e4",
     "husky": "9.1.7"
   }
 }
