@@ -19,7 +19,7 @@
   "homepage": "https://github.com/aimha/openspec_agentsguidelines_template#readme",
   "private": true,
   "devDependencies": {
-    "@aimha/agent-harness": "github:aimha/agent-harness#v0.2.0",
+    "@aimha/agent-harness": "github:aimha/agent-harness#v0.2.1",
     "husky": "9.1.7"
   }
 }

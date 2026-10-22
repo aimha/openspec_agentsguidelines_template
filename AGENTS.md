@@ -1,4 +1,4 @@
-<!-- GENERATED da @aimha/agent-harness@0.2.0: non modificare direttamente. Fonte: pacchetto agent-harness + .agent-guidelines/PATTERNS.md → npx agent-harness sync -->
+<!-- GENERATED da @aimha/agent-harness@0.2.1: non modificare direttamente. Fonte: pacchetto agent-harness + .agent-guidelines/PATTERNS.md → npx agent-harness sync -->
 
 # CORE — Naming, convenzioni, restrizioni assolute
 
@@ -109,7 +109,7 @@ openspec/specs/*
 
 Eccezioni, modificabili: `.env.example`, `*/.env.example`.
 
-Il pre-commit blocca le modifiche a questi file sui branch `ai/*`. Quando un task ne ha bisogno, li modifica a mano una persona su un branch `fix/` o `feature/` (vedi Catene di branch), e l'agente lo segnala nel summary come domanda aperta.
+Il pre-commit blocca le modifiche a questi file sui branch `ai/*`, tranne `openspec/specs/`: lì scrive `npx openspec archive` al passo 8, e una persona vi compila il `Purpose` delle capability nuove. Quando un task ne ha bisogno, li modifica a mano una persona su un branch `fix/` o `feature/` (vedi Catene di branch), e l'agente lo segnala nel summary come domanda aperta.
 
 ---
 
